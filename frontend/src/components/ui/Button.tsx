@@ -1,6 +1,6 @@
 import type {ButtonHTMLAttributes} from "react";
 
-type Variant = "primary" | "danger";
+type Variant = "primary" | "secondary" | "danger";
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
     variant?: Variant;
@@ -18,10 +18,12 @@ const base =
     transition 
     focus:outline-none 
     focus:ring-2 
+    cursor-pointer
     focus:ring-black/20`;
 
 const variants: Record<Variant, string> = {
     primary: "bg-black text-white hover:bg-black/90",
+    secondary: "bg-blue-500 text-white hover:bg-blue-700",
     danger: "bg-red-600 text-white hover:bg-red-700",
 };
 
