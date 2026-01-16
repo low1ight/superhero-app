@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
-export type Hero = {
+export type HeroFullInfo = {
     id: number;
     nickname: string;
     realName: string;
@@ -8,15 +8,20 @@ export type Hero = {
     superPower: string;
     imageUrl: string;
 };
+export type Hero = {
+    id: number;
+    nickname: string;
+    imageUrl: string;
+};
 
-export const heroesMock: Hero[] = [
+export const heroesFull:HeroFullInfo[] = [
     {
         id: 1,
         nickname: "Spider-Man",
         realName: "Peter Parker",
         description: "Friendly neighborhood hero.",
-        superPower: "Spider sense, agility, web shooting.",
-        imageUrl: "https://placehold.co/600x400/111827/FFFFFF/png?text=Spider-Man",
+        superPower: "Spider-sense, agility, web shooting.",
+        imageUrl: "https://placehold.co/1200x1200/111827/FFFFFF/png?text=Spider-Man",
     },
     {
         id: 2,
@@ -24,13 +29,67 @@ export const heroesMock: Hero[] = [
         realName: "Toshinori Yagi",
         description: "Symbol of Peace.",
         superPower: "One For All — incredible strength.",
-        imageUrl: "https://placehold.co/600x400/111827/FFFFFF/png?text=All+Might",
+        imageUrl: "https://placehold.co/1200x1200/111827/FFFFFF/png?text=All+Might",
+    },
+    {
+        id: 3,
+        nickname: "Batman",
+        realName: "Bruce Wayne",
+        description: "Dark Knight of Gotham.",
+        superPower: "Peak human abilities, intelligence, gadgets.",
+        imageUrl: "https://placehold.co/1200x1200/111827/FFFFFF/png?text=Batman",
+    },
+    {
+        id: 4,
+        nickname: "Iron Man",
+        realName: "Tony Stark",
+        description: "Genius inventor in a high-tech suit.",
+        superPower: "Powered armor, flight, advanced weapons.",
+        imageUrl: "https://placehold.co/1200x1200/111827/FFFFFF/png?text=Iron+Man",
+    },
+    {
+        id: 5,
+        nickname: "Wonder Woman",
+        realName: "Diana Prince",
+        description: "Amazon warrior and protector of justice.",
+        superPower: "Super strength, combat skill, lasso of truth.",
+        imageUrl: "https://placehold.co/1200x1200/111827/FFFFFF/png?text=Wonder+Woman",
+    },
+];
+
+
+// 2) Короткі дані (тільки id, nickname, imageUrl) — теж 5 елементів
+export const heroesShort:Hero[] = [
+    {
+        id: 1,
+        nickname: "Spider-Man",
+        imageUrl: "https://placehold.co/1200x1200/111827/FFFFFF/png?text=Spider-Man",
+    },
+    {
+        id: 2,
+        nickname: "All Might",
+        imageUrl: "https://placehold.co/1200x1200/111827/FFFFFF/png?text=All+Might",
+    },
+    {
+        id: 3,
+        nickname: "Batman",
+        imageUrl: "https://placehold.co/1200x1200/111827/FFFFFF/png?text=Batman",
+    },
+    {
+        id: 4,
+        nickname: "Iron Man",
+        imageUrl: "https://placehold.co/1200x1200/111827/FFFFFF/png?text=Iron+Man",
+    },
+    {
+        id: 5,
+        nickname: "Wonder Woman",
+        imageUrl: "https://placehold.co/1200x1200/111827/FFFFFF/png?text=Wonder+Woman",
     },
 ];
 type HeroesState = {
     isLoading: boolean,
     items: Hero[],
-    selected: Hero | null,
+    selected: HeroFullInfo | null,
     error: string | null,
 }
 
@@ -61,7 +120,20 @@ const heroesSlice = createSlice({
                 .addCase(getHeroes.rejected, (state) => {
                     state.isLoading = false;
                     state.error = "500";
+                })
+                .addCase(getHeroById.pending, (state) => {
+                    state.isLoading = true;
+                    state.error = null;
+                })
+                .addCase(getHeroById.fulfilled, (state, action) => {
+                    state.isLoading = false;
+                    state.selected = action.payload;
+                })
+                .addCase(getHeroById.rejected, (state) => {
+                    state.isLoading = false;
+                    state.error = "500";
                 });
+
 
     }}
 
@@ -74,8 +146,33 @@ const delay = (ms: number) => new Promise<void>((res) => setTimeout(res, ms));
 export const getHeroes = createAsyncThunk<Hero[]>(
     "heroes/getAll",
     async () => {
-            await delay(4000)
-            return heroesMock
+            await delay(200)
+            return heroesShort
         });
+
+export const getHeroById = createAsyncThunk<HeroFullInfo | null, number>(
+    "heroes/getById",
+    async (id:number) => {
+        await delay(200)
+        return heroesFull.find((item:HeroFullInfo) => item.id === id) ?? null
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
