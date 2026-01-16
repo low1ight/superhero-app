@@ -3,6 +3,8 @@ import Header from "./components/Header.tsx";
 import {Navigate, Route, Routes} from "react-router-dom";
 import HeroesListPage from "./pages/HeroesListPage.tsx";
 import HeroesInfoPage from "./pages/HeroInfoPage.tsx";
+import HeroCreatePage from "./pages/HeroCreatePage.tsx";
+import HeroEditPage from "./pages/HeroEditPage.tsx";
 
 function App() {
 
@@ -15,6 +17,8 @@ function App() {
                         <Route path="/" element={<Navigate to="/heroes" replace />} />
                         <Route path="/heroes" element={<HeroesListPage/>} />
                         <Route path="/heroes/:id" element={<HeroesInfoPage/>} />
+                        <Route path="/heroes/new" element={<HeroCreatePage/>} />
+                        <Route path="/heroes/:id/edit" element={<HeroEditPage/>} />
 
                     </Routes>
                 </main>
