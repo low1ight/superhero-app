@@ -2,6 +2,7 @@ import HeroCard from "../components/heroes/HeroCard.tsx";
 import {useAppDispatch, useAppSelector} from "../store/hooks.ts";
 import {getHeroes, type Hero} from "../store/heroesSlice.ts";
 import {useEffect} from "react";
+import HeroCardSkeleton from "../components/heroes/HeroCardSkeleton.tsx";
 
 
 function HeroesListPage() {
@@ -16,12 +17,18 @@ function HeroesListPage() {
     },[dispatch]);
 
 
-   if(isLoading) return <div>LOADING</div>
+   //if(isLoading) return <HeroCardSkeleton />
+
+
 
     return (
         <div>
             <div className="mt-4 grid grid-cols-1 gap-4">
-                {heroes.map((item:Hero) => <HeroCard
+                {isLoading ?
+                    Array.from({ length: 6 }).map((_, i) => (
+                            <HeroCardSkeleton key={i} />))
+                    :
+                    heroes.map((item:Hero) => <HeroCard
                     key={item.id}
                     id={item.id}
                     imgUrl={item.imageUrl}
