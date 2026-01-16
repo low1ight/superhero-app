@@ -9,20 +9,20 @@ export class Superhero {
   nickname: string;
 
   @Column()
-  realName: string;
+  real_name: string;
 
   @Column()
-  originDescription: string;
+  origin_description: string;
 
   @Column()
-  superPower: string;
+  super_power: string;
 
   @Column()
-  catchPhrase: string;
+  catch_phrase: string;
 
   @Column()
-  imageUrl: string;
+  image_url: string;
 
   @Column({ type: 'timestamptz' })
-  createdAt: Date;
+  created_at: Date;
 }

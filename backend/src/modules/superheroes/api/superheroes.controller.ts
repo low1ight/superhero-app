@@ -1,9 +1,10 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { CreateSuperheroDto } from './input-dto/create-superhero.dto';
+import { CreateSuperheroInputDto } from './input-dto/create-superhero-input.dto';
+import { SuperheroesService } from '../application/superheroes.service';
 
 @Controller('api/superheroes')
 export class SuperheroesController {
-  constructor() {}
+  constructor(private readonly superheroesService: SuperheroesService) {}
 
   @Get()
   getAll(): string {
@@ -11,7 +12,7 @@ export class SuperheroesController {
   }
 
   @Post()
-  create(@Body() dto: CreateSuperheroDto) {
-    return dto;
+  async create(@Body() dto: CreateSuperheroInputDto) {
+    return await this.superheroesService.createSuperhero(dto);
   }
 }

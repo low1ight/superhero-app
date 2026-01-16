@@ -1,6 +1,6 @@
 import { IsString, IsNotEmpty, Length } from 'class-validator';
 
-export class CreateSuperheroDto {
+export class CreateSuperheroInputDto {
   @IsString()
   @IsNotEmpty()
   @Length(2, 30)

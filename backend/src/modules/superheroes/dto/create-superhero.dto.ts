@@ -1,9 +1,9 @@
 export type CreateSuperheroDto = {
   nickname: string;
-  realName: string;
-  originDescription: string;
-  superPower: string;
-  catchPhrase: string;
-  imageUrl: string;
-  createdAt: string;
+  real_name: string;
+  origin_description: string;
+  super_power: string;
+  catch_phrase: string;
+  image_url: string;
+  created_at: string;
 };
