@@ -17,15 +17,11 @@ function HeroesListPage() {
     },[dispatch]);
 
 
-   //if(isLoading) return <HeroCardSkeleton />
-
-
-
     return (
         <div>
             <div className="mt-4 grid grid-cols-1 gap-4">
                 {isLoading ?
-                    Array.from({ length: 6 }).map((_, i) => (
+                    Array.from({ length: 5 }).map((_, i) => (
                             <HeroCardSkeleton key={i} />))
                     :
                     heroes.map((item:Hero) => <HeroCard
