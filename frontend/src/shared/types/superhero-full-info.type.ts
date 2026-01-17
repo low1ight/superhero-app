@@ -2,7 +2,7 @@ export type SuperheroFullInfoType = {
     id: number;
     nickname: string;
     realName: string;
-    description: string;
+    originDescription: string;
     superPower: string;
     imageUrl: string;
 };
