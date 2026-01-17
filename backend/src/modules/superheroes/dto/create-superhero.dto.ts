@@ -5,5 +5,5 @@ export type CreateSuperheroDto = {
   super_power: string;
   catch_phrase: string;
   image_url: string;
-  created_at: string;
+  created_at: Date;
 };
