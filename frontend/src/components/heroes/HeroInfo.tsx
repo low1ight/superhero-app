@@ -1,10 +1,10 @@
 import type {SuperheroFullInfoType} from "../../shared/types/superhero-full-info.type.ts";
 
 
-function HeroInfo({imageUrl,nickname,originDescription,superPower,realName}:SuperheroFullInfoType) {
+function HeroInfo({imageUrl,nickname,originDescription,superPower,catchPhrase,realName}:SuperheroFullInfoType) {
     return (
         <div className="grid gap-8 md:grid-cols-[320px_1fr] overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-lg p-6 md:p-8">
-            <div className="self-start md:self-center h-[320px] overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br from-gray-50 to-gray-100 shadow-inner">
+            <div className="self-start  h-[320px] overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br from-gray-50 to-gray-100 shadow-inner">
                 <img
                     src={imageUrl}
                     alt={nickname}
@@ -29,6 +29,15 @@ function HeroInfo({imageUrl,nickname,originDescription,superPower,realName}:Supe
                     </div>
                 </div>
 
+                <div className="space-y-3">
+                    <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                        <span className="w-1 h-6 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full"></span>
+                        Catch phrase:
+                    </h2>
+                    <p className="text-gray-700 leading-relaxed text-base pl-3">
+                        {catchPhrase}
+                    </p>
+                </div>
 
                 <div className="space-y-3">
                     <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
@@ -39,6 +48,8 @@ function HeroInfo({imageUrl,nickname,originDescription,superPower,realName}:Supe
                         {originDescription}
                     </p>
                 </div>
+
+
 
 
                 <div className="space-y-3">
