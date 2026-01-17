@@ -1,14 +1,14 @@
-import type {HeroFullInfo} from "../../store/heroesSlice.ts";
+import type {SuperheroFullInfoType} from "../../shared/types/superhero-full-info.type.ts";
 
 
-function HeroInfo({imageUrl,nickname,description,superPower,realName}:HeroFullInfo) {
+function HeroInfo({imageUrl,nickname,originDescription,superPower,realName}:SuperheroFullInfoType) {
     return (
         <div className="grid gap-8 md:grid-cols-[320px_1fr] overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-lg p-6 md:p-8">
-            <div className="self-start h-fit overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br from-gray-50 to-gray-100 shadow-inner">
+            <div className="self-start md:self-center h-[320px] overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br from-gray-50 to-gray-100 shadow-inner">
                 <img
                     src={imageUrl}
                     alt={nickname}
-                    className="w-full h-auto object-cover block"
+                    className="w-full h-full object-cover block"
                 />
             </div>
 
@@ -36,7 +36,7 @@ function HeroInfo({imageUrl,nickname,description,superPower,realName}:HeroFullIn
                         Description
                     </h2>
                     <p className="text-gray-700 leading-relaxed text-base pl-3">
-                        {description}
+                        {originDescription}
                     </p>
                 </div>
 
