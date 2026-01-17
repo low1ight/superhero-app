@@ -1,20 +1,9 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import type {SuperheroFullInfoType} from "../shared/types/superhero-full-info.type.ts";
+import type {SuperheroSummaryType} from "../shared/types/superhero-summary.type.ts";
 
-export type HeroFullInfo = {
-    id: number;
-    nickname: string;
-    realName: string;
-    description: string;
-    superPower: string;
-    imageUrl: string;
-};
-export type Hero = {
-    id: number;
-    nickname: string;
-    imageUrl: string;
-};
 
-export const heroesFull:HeroFullInfo[] = [
+export const heroesFull:SuperheroFullInfoType[] = [
     {
         id: 1,
         nickname: "Spider-Man",
@@ -59,7 +48,7 @@ export const heroesFull:HeroFullInfo[] = [
 
 
 // 2) Короткі дані (тільки id, nickname, imageUrl) — теж 5 елементів
-export const heroesShort:Hero[] = [
+export const heroesShort:SuperheroSummaryType[] = [
     {
         id: 1,
         nickname: "Spider-Man",
@@ -88,8 +77,8 @@ export const heroesShort:Hero[] = [
 ];
 type HeroesState = {
     isLoading: boolean,
-    items: Hero[],
-    selected: HeroFullInfo | null,
+    items: SuperheroSummaryType[],
+    selected: SuperheroFullInfoType | null,
     error: string | null,
 }
 
@@ -143,18 +132,18 @@ export const heroesReducer = heroesSlice.reducer;
 
 const delay = (ms: number) => new Promise<void>((res) => setTimeout(res, ms));
 
-export const getHeroes = createAsyncThunk<Hero[]>(
+export const getHeroes = createAsyncThunk<SuperheroSummaryType[]>(
     "heroes/getAll",
     async () => {
-            await delay(200)
+            await delay(2010)
             return heroesShort
         });
 
-export const getHeroById = createAsyncThunk<HeroFullInfo | null, number>(
+export const getHeroById = createAsyncThunk<SuperheroFullInfoType | null, number>(
     "heroes/getById",
     async (id:number) => {
-        await delay(200)
-        return heroesFull.find((item:HeroFullInfo) => item.id === id) ?? null
+        await delay(2100)
+        return heroesFull.find((item:SuperheroFullInfoType) => item.id === id) ?? null
     });
 
 
