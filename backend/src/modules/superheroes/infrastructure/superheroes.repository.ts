@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Superhero } from '../domain/superhero.entity';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
+import { SuperheroSummaryViewDto } from '../api/view-dto/superhero-summary.view-dto';
 
 @Injectable()
 export class SuperheroesRepository {
@@ -13,6 +14,7 @@ export class SuperheroesRepository {
 
   async createSuperhero(dto: CreateSuperheroDto) {
     const superhero = this.superheroRepo.create(dto);
-    return await this.superheroRepo.save(superhero);
+    const createdHero: Superhero = await this.superheroRepo.save(superhero);
+    return new SuperheroSummaryViewDto(createdHero);
   }
 }

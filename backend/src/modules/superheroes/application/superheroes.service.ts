@@ -19,7 +19,7 @@ export class SuperheroesService {
       origin_description: originDescription,
       super_power: superPower,
       catch_phrase: catchPhrase,
-      created_at: new Date().toISOString(),
+      created_at: new Date(),
       image_url: 'https://4kwallpapers.com/images/walls/thumbs_3t/18659.jpg',
     };
 
