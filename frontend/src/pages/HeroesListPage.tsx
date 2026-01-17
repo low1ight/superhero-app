@@ -1,13 +1,14 @@
 import HeroCard from "../components/heroes/HeroCard.tsx";
 import {useAppDispatch, useAppSelector} from "../store/hooks.ts";
-import {getHeroes, type Hero} from "../store/heroesSlice.ts";
+import {getHeroes} from "../store/heroesSlice.ts";
 import {useEffect} from "react";
 import HeroCardSkeleton from "../components/heroes/HeroCardSkeleton.tsx";
+import type {SuperheroSummaryType} from "../shared/types/superhero-summary.type.ts";
 
 
 function HeroesListPage() {
 
-    const heroes:Hero[] = useAppSelector((state) => state.heroes.items);
+    const heroes:SuperheroSummaryType[] = useAppSelector((state) => state.heroes.items);
     const isLoading = useAppSelector((state) => state.heroes.isLoading);
 
     const dispatch = useAppDispatch();
@@ -24,7 +25,7 @@ function HeroesListPage() {
                     Array.from({ length: 5 }).map((_, i) => (
                             <HeroCardSkeleton key={i} />))
                     :
-                    heroes.map((item:Hero) => <HeroCard
+                    heroes.map((item:SuperheroSummaryType) => <HeroCard
                     key={item.id}
                     id={item.id}
                     imgUrl={item.imageUrl}
