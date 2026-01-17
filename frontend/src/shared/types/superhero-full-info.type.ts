@@ -4,5 +4,6 @@ export type SuperheroFullInfoType = {
     realName: string;
     originDescription: string;
     superPower: string;
+    catchPhrase: string
     imageUrl: string;
 };
