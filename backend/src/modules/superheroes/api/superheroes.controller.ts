@@ -1,12 +1,14 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
   Post,
+  Put,
 } from '@nestjs/common';
-import { CreateSuperheroInputDto } from './input-dto/create-superhero-input.dto';
+import { SuperheroInputDto } from './input-dto/superhero-input.dto';
 import { SuperheroesService } from '../application/superheroes.service';
 import { SuperheroesQueryRepository } from '../infrastructure/superheroes.query-repository';
 
@@ -28,7 +30,20 @@ export class SuperheroesController {
   }
 
   @Post()
-  async create(@Body() dto: CreateSuperheroInputDto) {
+  async create(@Body() dto: SuperheroInputDto) {
     return await this.superheroesService.createSuperhero(dto);
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: SuperheroInputDto,
+  ) {
+    return await this.superheroesService.updateById(id, dto);
+  }
+
+  @Delete(':id')
+  async deleteById(@Param('id', ParseIntPipe) id: number) {
+    return await this.superheroesService.deleteById(id);
   }
 }

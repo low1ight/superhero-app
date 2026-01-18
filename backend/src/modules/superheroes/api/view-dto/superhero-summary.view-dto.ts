@@ -1,4 +1,3 @@
-import { Superhero } from '../../domain/superhero.entity';
 import { SuperheroSummaryDocumentType } from '../../infrastructure/types/sumerhero-summary.document.type';
 
 export class SuperheroSummaryViewDto {

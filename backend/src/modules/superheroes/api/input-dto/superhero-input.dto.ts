@@ -1,6 +1,6 @@
 import { IsString, IsNotEmpty, Length } from 'class-validator';
 
-export class CreateSuperheroInputDto {
+export class SuperheroInputDto {
   @IsString()
   @IsNotEmpty()
   @Length(2, 30)
@@ -8,7 +8,7 @@ export class CreateSuperheroInputDto {
 
   @IsString()
   @IsNotEmpty()
-  @Length(2, 50)
+  @Length(2, 30)
   realName: string;
 
   @IsString()
