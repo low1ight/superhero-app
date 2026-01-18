@@ -4,6 +4,7 @@ import {getHeroes} from "../store/heroesSlice.ts";
 import {useEffect} from "react";
 import HeroCardSkeleton from "../components/heroes/HeroCardSkeleton.tsx";
 import type {SuperheroSummaryType} from "../shared/types/superhero-summary.type.ts";
+import {AddHeroFab} from "../components/ui/AddNewHeroFab.tsx";
 
 
 function HeroesListPage() {
@@ -21,6 +22,7 @@ function HeroesListPage() {
     return (
         <div>
             <div className="mt-4 grid grid-cols-1 gap-4">
+                <AddHeroFab />
                 {isLoading ?
                     Array.from({ length: 5 }).map((_, i) => (
                             <HeroCardSkeleton key={i} />))
