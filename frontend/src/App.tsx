@@ -17,7 +17,7 @@ function App() {
                         <Route path="/" element={<Navigate to="/heroes" replace />} />
                         <Route path="/heroes" element={<HeroesListPage/>} />
                         <Route path="/heroes/:id" element={<HeroesInfoPage/>} />
-                        <Route path="/heroes/new" element={<HeroCreatePage/>} />
+                        <Route path="/heroes/create" element={<HeroCreatePage/>} />
                         <Route path="/heroes/:id/edit" element={<HeroEditPage/>} />
 
                     </Routes>
