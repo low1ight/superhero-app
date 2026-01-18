@@ -7,7 +7,7 @@ export class SuperheroFullViewDto {
   originDescription: string;
   superPower: string;
   catchPhrase: string;
-  imageUrl: string;
+  imageUrl: string | null;
 
   constructor({
     id,

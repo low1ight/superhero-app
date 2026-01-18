@@ -4,6 +4,6 @@ export type CreateSuperheroDto = {
   origin_description: string;
   super_power: string;
   catch_phrase: string;
-  image_url: string;
+  image_url: string | null;
   created_at: Date;
 };

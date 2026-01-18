@@ -25,4 +25,6 @@ export class SuperheroInputDto {
   @IsNotEmpty()
   @Length(2, 100)
   catchPhrase: string;
+
+  image: null | string;
 }

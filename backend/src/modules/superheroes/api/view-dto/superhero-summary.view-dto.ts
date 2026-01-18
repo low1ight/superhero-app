@@ -3,7 +3,7 @@ import { SuperheroSummaryDocumentType } from '../../infrastructure/types/sumerhe
 export class SuperheroSummaryViewDto {
   id: number;
   nickname: string;
-  imageUrl: string;
+  imageUrl: string | null;
 
   constructor({ id, nickname, image_url }: SuperheroSummaryDocumentType) {
     this.id = id;

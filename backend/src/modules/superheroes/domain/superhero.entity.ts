@@ -20,8 +20,8 @@ export class Superhero {
   @Column()
   catch_phrase: string;
 
-  @Column()
-  image_url: string;
+  @Column({ type: 'varchar', nullable: true })
+  image_url: string | null;
 
   @Column({ type: 'timestamptz' })
   created_at: Date;
