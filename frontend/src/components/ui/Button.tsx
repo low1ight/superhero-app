@@ -4,6 +4,8 @@ type Variant = "primary" | "secondary" | "danger";
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
     variant?: Variant;
+    isSubmitting?: boolean;
+    buttonName?:string
 };
 
 const base =
@@ -27,14 +29,23 @@ const variants: Record<Variant, string> = {
     danger: "bg-red-600 text-white hover:bg-red-700",
 };
 
-function Button({variant = "primary", className = "", ...props}: ButtonProps) {
+function Button({variant = "primary",isSubmitting = false  ,buttonName = '',className = "", ...props}: ButtonProps) {
 
 
     return (
         <button
             className={`${base} ${variants[variant]} ${className}`}
             {...props}
-        />
+        >
+            {isSubmitting ? (
+                <span className="flex items-center gap-2">
+                                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                                Saving...
+                            </span>
+            ) : (
+                buttonName
+            )}
+        </button>
     );
 }
 
