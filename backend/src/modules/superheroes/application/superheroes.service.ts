@@ -3,17 +3,31 @@ import { CreateSuperheroDto } from '../dto/create-superhero.dto';
 import { SuperheroesRepository } from '../infrastructure/superheroes.repository';
 import { Injectable } from '@nestjs/common';
 import { UpdateSuperheroDto } from '../dto/update-superhero.dto';
+import { randomUUID } from 'crypto';
+import { S3Service } from '../provider/s3.service';
 
 @Injectable()
 export class SuperheroesService {
-  constructor(private readonly superheroesRepository: SuperheroesRepository) {}
-  async createSuperhero({
-    nickname,
-    realName,
-    originDescription,
-    superPower,
-    catchPhrase,
-  }: SuperheroInputDto) {
+  constructor(
+    private readonly superheroesRepository: SuperheroesRepository,
+    private readonly s3Service: S3Service,
+  ) {}
+  async createSuperhero(
+    {
+      nickname,
+      realName,
+      originDescription,
+      superPower,
+      catchPhrase,
+    }: SuperheroInputDto,
+    image: Express.Multer.File | null,
+  ) {
+    let imgKey: null | string = null;
+    if (image) {
+      imgKey = randomUUID();
+      await this.s3Service.putImage(image, imgKey);
+    }
+
     const superhero: CreateSuperheroDto = {
       nickname,
       real_name: realName,
@@ -21,19 +35,22 @@ export class SuperheroesService {
       super_power: superPower,
       catch_phrase: catchPhrase,
       created_at: new Date(),
-      image_url: 'https://4kwallpapers.com/images/walls/thumbs_3t/18659.jpg',
+      image_url: imgKey,
     };
 
     return await this.superheroesRepository.createSuperhero(superhero);
   }
 
   async deleteById(id: number) {
-    const isSuperheroExist =
-      await this.superheroesRepository.isSuperheroExist(id);
+    const superhero = await this.superheroesRepository.getSuperheroById(id);
 
-    if (!isSuperheroExist) return null;
+    if (!superhero) return null;
 
-    return await this.superheroesRepository.deleteSuperHero(id);
+    await this.superheroesRepository.deleteSuperHero(id);
+
+    if (superhero.image_url) {
+      await this.s3Service.deleteImage(superhero.image_url);
+    }
   }
 
   async updateById(
@@ -45,11 +62,21 @@ export class SuperheroesService {
       superPower,
       catchPhrase,
     }: SuperheroInputDto,
+    imageFile: Express.Multer.File | null,
   ) {
-    const isSuperheroExist =
-      await this.superheroesRepository.isSuperheroExist(id);
+    const superhero = await this.superheroesRepository.getSuperheroById(id);
 
-    if (!isSuperheroExist) return null;
+    if (!superhero) return null;
+
+    let imgKey: null | string = null;
+
+    if (imageFile) {
+      imgKey = randomUUID();
+      await this.s3Service.putImage(imageFile, imgKey);
+      if (superhero.image_url) {
+        await this.s3Service.deleteImage(superhero.image_url);
+      }
+    }
 
     const superheroUpdatedDto: UpdateSuperheroDto = {
       nickname,
@@ -57,7 +84,7 @@ export class SuperheroesService {
       origin_description: originDescription,
       super_power: superPower,
       catch_phrase: catchPhrase,
-      image_url: 'https://4kwallpapers.com/images/walls/thumbs_3t/18659.jpg',
+      image_url: imgKey,
     };
 
     return await this.superheroesRepository.updateSuperHero(
