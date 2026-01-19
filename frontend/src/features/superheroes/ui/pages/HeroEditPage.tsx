@@ -2,12 +2,12 @@ import {useAppDispatch, useAppSelector} from "../../../../app/hooks.ts";
 import {FormProvider, useForm} from "react-hook-form";
 import {defaultValues, type HeroFormValues, heroSchema} from "../../model/validators/superhero.validation.ts";
 import {zodResolver} from "@hookform/resolvers/zod";
-
 import BackToList from "../components/BackToList.tsx";
 import {SuperHeroForm} from "../components/SuperHeroForm.tsx";
 import {useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {getHeroById, updateHero} from "../../model/thunks.ts";
+import NotFound from "../../../../shared/ui/NotFoundPage.tsx";
 
 function HeroEditPage() {
 
@@ -55,7 +55,7 @@ function HeroEditPage() {
             {selected ?
                 <FormProvider {...form}>
                 <SuperHeroForm currentImage={selected.imageUrl} submitButtonName="Update" onSubmit={onSubmit}/>
-            </FormProvider> : null}
+            </FormProvider> : <NotFound />}
 
 
 
