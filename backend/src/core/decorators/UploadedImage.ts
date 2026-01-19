@@ -8,10 +8,10 @@ import {
 const maxSize = { maxSize: 5 * 1024 * 1024 };
 const fileTypes = /(jpeg|png|webp)$/;
 
-export function UploadedImage() {
+export function UploadedImage(isRequired: boolean) {
   return UploadedFile(
     new ParseFilePipe({
-      fileIsRequired: false,
+      fileIsRequired: isRequired,
       validators: [
         new MaxFileSizeValidator(maxSize),
         new FileTypeValidator({ fileType: fileTypes }),

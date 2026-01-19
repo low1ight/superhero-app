@@ -2,48 +2,66 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Superhero } from '../domain/superhero.entity';
-import { SuperheroSummaryDocumentType } from './types/sumerhero-summary.document.type';
 import { SuperheroSummaryViewDto } from '../api/view-dto/superhero-summary.view-dto';
-import { SuperheroFullDocumentType } from './types/sumerhero-full.document.type';
 import { SuperheroFullViewDto } from '../api/view-dto/superhero-full.view-dto';
+import { BaseQueryParams } from '../../../core/dto/base-query-params.input.dto';
+import { Paginator } from '../../../core/dto/paginator/paginator';
 
 @Injectable()
 export class SuperheroesQueryRepository {
   constructor(
     @InjectRepository(Superhero) private superheroesRepo: Repository<Superhero>,
   ) {}
-  async getAllSuperheroes(): Promise<SuperheroSummaryViewDto[]> {
-    const superheroes: SuperheroSummaryDocumentType[] =
-      await this.superheroesRepo.find({
-        select: {
-          id: true,
-          nickname: true,
-          image_url: true,
-        },
-        take: 5,
-        order: {
-          created_at: 'desc',
-        },
-      });
+  async getAllSuperheroes(
+    query: BaseQueryParams,
+  ): Promise<Paginator<SuperheroSummaryViewDto>> {
+    const [superheroes, totalCount] = await this.superheroesRepo.findAndCount({
+      select: {
+        id: true,
+        nickname: true,
+        image_url: true,
+      },
+      skip: query.getSkip(),
+      take: query.pageSize,
+      order: {
+        created_at: query.getSortDirection(),
+      },
+    });
 
-    return superheroes.map((item) => new SuperheroSummaryViewDto(item));
+    const mappedResult = superheroes.map(
+      (item) => new SuperheroSummaryViewDto(item),
+    );
+
+    return new Paginator<SuperheroSummaryViewDto>(
+      query.pageNumber,
+      query.pageSize,
+      totalCount,
+      mappedResult,
+    );
   }
 
   async getById(id: number): Promise<SuperheroFullViewDto | null> {
-    const superhero: SuperheroFullDocumentType | null =
-      await this.superheroesRepo.findOne({
-        where: { id },
-        select: {
+    const superhero: Superhero | null = await this.superheroesRepo.findOne({
+      where: { id },
+      relations: {
+        imagesSet: true,
+      },
+      select: {
+        id: true,
+        nickname: true,
+        real_name: true,
+        origin_description: true,
+        super_power: true,
+        catch_phrase: true,
+        image_url: true,
+        created_at: true,
+        imagesSet: {
           id: true,
-          nickname: true,
-          real_name: true,
-          origin_description: true,
-          super_power: true,
-          catch_phrase: true,
-          image_url: true,
+          img_key: true,
           created_at: true,
         },
-      });
+      },
+    });
 
     if (!superhero) return null;
 

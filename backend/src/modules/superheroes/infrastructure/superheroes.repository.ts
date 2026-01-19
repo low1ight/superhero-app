@@ -19,8 +19,20 @@ export class SuperheroesRepository {
     return new SuperheroSummaryViewDto(createdHero);
   }
 
-  async isSuperheroExist(id: number): Promise<boolean> {
-    return await this.superheroRepo.existsBy({ id });
+  async getSuperheroById(id: number): Promise<Superhero | null> {
+    return await this.superheroRepo.findOne({
+      where: { id },
+      select: {
+        id: true,
+        nickname: true,
+        real_name: true,
+        origin_description: true,
+        super_power: true,
+        catch_phrase: true,
+        image_url: true,
+        created_at: true,
+      },
+    });
   }
 
   async updateSuperHero(id: number, dto: UpdateSuperheroDto) {

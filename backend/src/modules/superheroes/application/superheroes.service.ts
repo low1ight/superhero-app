@@ -5,11 +5,15 @@ import { Injectable } from '@nestjs/common';
 import { UpdateSuperheroDto } from '../dto/update-superhero.dto';
 import { randomUUID } from 'crypto';
 import { S3Service } from '../provider/s3.service';
+import { CreateImageDto } from '../dto/create-image.dto';
+import { SuperheroesImagesSetRepository } from '../infrastructure/superheroes-images-set.repository';
+import { SuperheroImageViewDTO } from '../api/view-dto/superhero-image.view-dto';
 
 @Injectable()
 export class SuperheroesService {
   constructor(
     private readonly superheroesRepository: SuperheroesRepository,
+    private readonly superheroesImagesSetRepository: SuperheroesImagesSetRepository,
     private readonly s3Service: S3Service,
   ) {}
   async createSuperhero(
@@ -90,6 +94,43 @@ export class SuperheroesService {
     return await this.superheroesRepository.updateSuperHero(
       id,
       superheroUpdatedDto,
+    );
+  }
+
+  async addImageFromSetForHero(
+    superheroId: number,
+    image: Express.Multer.File,
+  ) {
+    const superhero =
+      await this.superheroesRepository.getSuperheroById(superheroId);
+
+    if (!superhero) return null;
+
+    const imgKey = randomUUID();
+    await this.s3Service.putImage(image, imgKey);
+    const imgUrl: string = await this.s3Service.signImage(imgKey);
+    const dto: CreateImageDto = {
+      img_key: imgKey,
+      created_at: new Date(),
+      superhero_id: superheroId,
+    };
+
+    const result: SuperheroImageViewDTO =
+      await this.superheroesImagesSetRepository.createSuperheroImage(dto);
+
+    return { ...result, imgUrl };
+  }
+
+  async deleteImageFromSetForHero(superheroId: number, imageId: number) {
+    const image =
+      await this.superheroesImagesSetRepository.getSuperheroImageById(imageId);
+
+    if (!image) return null;
+
+    await this.s3Service.deleteImage(image.img_key);
+
+    return await this.superheroesImagesSetRepository.deleteSuperheroImage(
+      imageId,
     );
   }
 }

@@ -1,4 +1,5 @@
 import { Superhero } from '../../domain/superhero.entity';
+import { SuperheroImageViewDTO } from './images.view.dto';
 
 export class SuperheroFullViewDto {
   id: number;
@@ -8,6 +9,7 @@ export class SuperheroFullViewDto {
   superPower: string;
   catchPhrase: string;
   imageUrl: string | null;
+  imagesSet: SuperheroImageViewDTO[];
 
   constructor({
     id,
@@ -17,6 +19,7 @@ export class SuperheroFullViewDto {
     super_power,
     catch_phrase,
     image_url,
+    imagesSet,
   }: Superhero) {
     this.id = id;
     this.nickname = nickname;
@@ -25,5 +28,6 @@ export class SuperheroFullViewDto {
     this.superPower = super_power;
     this.catchPhrase = catch_phrase;
     this.imageUrl = image_url;
+    this.imagesSet = imagesSet.map((i) => new SuperheroImageViewDTO(i));
   }
 }

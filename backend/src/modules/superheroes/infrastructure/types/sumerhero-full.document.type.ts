@@ -1,3 +1,5 @@
+import { SuperheroImagesSet } from '../../domain/superhero-images-set.entity';
+
 export type SuperheroFullDocumentType = {
   id: number;
   nickname: string;
@@ -6,5 +8,6 @@ export type SuperheroFullDocumentType = {
   super_power: string;
   catch_phrase: string;
   image_url: string | null;
+  images: SuperheroImagesSet[];
   created_at: Date;
 };
