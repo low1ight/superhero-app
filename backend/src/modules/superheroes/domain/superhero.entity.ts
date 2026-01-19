@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { SuperheroImagesSet } from './superhero-images-set.entity';
 
 @Entity('superheroes')
 export class Superhero {
@@ -25,4 +26,9 @@ export class Superhero {
 
   @Column({ type: 'timestamptz' })
   created_at: Date;
+
+  @OneToMany(() => SuperheroImagesSet, (img) => img.superhero, {
+    cascade: true,
+  })
+  imagesSet: SuperheroImagesSet[];
 }
