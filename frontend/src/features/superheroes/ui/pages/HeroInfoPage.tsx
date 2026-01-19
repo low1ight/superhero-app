@@ -7,6 +7,7 @@ import HeroInfo from "../components/HeroInfo.tsx";
 import HeroInfoSkeleton from "../skeletons/HeroInfoSekeleton.tsx";
 import BackToList from "../components/BackToList.tsx";
 import {deleteHero, getHeroById} from "../../model/thunks.ts";
+import NotFound from "../../../../shared/ui/NotFoundPage.tsx";
 
 function HeroesInfoPage() {
 
@@ -42,7 +43,7 @@ function HeroesInfoPage() {
         <div className="space-y-4">
             <nav className="flex items-center justify-between">
                 <BackToList/>
-                <div>
+                {!isLoading && selected ? <div>
                     <Link to={`/heroes/${id}/edit`}>
                         <Button type='button' buttonName="Edit" disabled={isLoading} variant='secondary'
                                 className='mx-1.5'>
@@ -53,7 +54,7 @@ function HeroesInfoPage() {
                             variant='danger'>
                         Delete
                     </Button>
-                </div>
+                </div> : null}
             </nav>
 
 
@@ -72,7 +73,7 @@ function HeroesInfoPage() {
                 <HeroInfoSkeleton/> :
                 selected ?
                     <HeroInfo {...selected} /> :
-                    <div>404 :(</div>}
+                    <NotFound />}
 
         </div>
     )

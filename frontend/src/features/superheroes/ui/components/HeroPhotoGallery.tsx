@@ -84,7 +84,7 @@ export function HeroPhotoGallery({heroId, images = []}: Props) {
             >
                 <input {...getInputProps()} />
                 <div className="text-sm text-gray-700">
-                    {isDragActive ? "Drop images here..." : "Drag & drop images або click"}
+                    {isDragActive ? "Drop images here..." : "Drag & drop images or click"}
                 </div>
                 <div className="text-xs text-gray-400 mt-1">jpg/png/webp up to 5MB</div>
             </div>

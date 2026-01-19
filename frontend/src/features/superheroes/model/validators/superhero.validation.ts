@@ -37,11 +37,11 @@ export const heroSchema = z.object({
 });
 
 export const defaultValues:Partial<HeroFormValues> = {
-    nickname: "qwerty",
-    realName: "real nametemp",
-    originDescription:"qweqwewqewqeqweqwedesc",
-    superPower: "pooowerrr",
-    catchPhrase: "all might",
+    nickname: "",
+    realName: "",
+    originDescription:"",
+    superPower: "",
+    catchPhrase: "",
     image: null,
 }
 
