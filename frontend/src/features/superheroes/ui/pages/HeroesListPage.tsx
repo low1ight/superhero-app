@@ -5,11 +5,13 @@ import HeroCardSkeleton from "../skeletons/HeroCardSkeleton.tsx";
 import type {SuperheroSummaryType} from "../../model/types/superhero-summary.type.ts";
 import {AddHeroFab} from "../components/AddNewHeroFab.tsx";
 import {getHeroes} from "../../model/thunks.ts";
+import Button from "../../../../shared/ui/Button.tsx";
+import {Link} from "react-router-dom";
 
 
 function HeroesListPage() {
 
-    const heroes:SuperheroSummaryType[] = useAppSelector((state) => state.heroes.items);
+    const heroes: SuperheroSummaryType[] = useAppSelector((state) => state.heroes.items);
     const isLoading = useAppSelector((state) => state.heroes.isLoading);
 
     const dispatch = useAppDispatch();
@@ -40,22 +42,38 @@ function HeroesListPage() {
     const goPrev = () => setPage((p) => Math.max(1, p - 1));
     const goNext = () => setPage((p) => Math.min(pagesCount, p + 1));
 
+    if (!isLoading && heroes.length < 1) return (
+        <div
+            className="rounded-3xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-10 text-center shadow-lg">
+            <h2 className="text-xl font-bold text-gray-900">There is no hero</h2>
+            <p className="mt-2 text-sm text-gray-600">
+                Add a new superhero and it will appear here.
+            </p>
+
+            <Link to={`/heroes/create`}>
+                <Button type='button' buttonName="Create New" disabled={isLoading} variant='secondary'
+                        className='m-5'>
+                    Edit
+                </Button>
+            </Link>
+        </div>
+    )
+
 
     return (
         <div>
             <div className="cursor-pointer mt-4 grid grid-cols-1 gap-4">
-                <AddHeroFab />
+                <AddHeroFab/>
                 {isLoading ?
-                    Array.from({ length: 5 }).map((_, i) => (
-                            <HeroCardSkeleton key={i} />))
+                    Array.from({length: 5}).map((_, i) => (
+                        <HeroCardSkeleton key={i}/>))
                     :
-                    heroes.map((item:SuperheroSummaryType) => <HeroCard
-                    key={item.id}
-                    id={item.id}
-                    imgUrl={item.imageUrl}
-                    nickname={item.nickname}/>)}
+                    heroes.map((item: SuperheroSummaryType) => <HeroCard
+                        key={item.id}
+                        id={item.id}
+                        imgUrl={item.imageUrl}
+                        nickname={item.nickname}/>)}
             </div>
-
 
 
             <div className="mt-6 flex items-center justify-center gap-2 flex-wrap">
@@ -67,7 +85,7 @@ function HeroesListPage() {
                     Prev
                 </button>
 
-                {Array.from({ length: pagesCount }, (_, i) => i + 1).map((p) => (
+                {Array.from({length: pagesCount}, (_, i) => i + 1).map((p) => (
                     <button
                         key={p}
                         onClick={() => setPage(p)}
@@ -88,7 +106,6 @@ function HeroesListPage() {
                     Next
                 </button>
             </div>
-
 
 
         </div>
