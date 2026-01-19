@@ -1,8 +1,8 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import type {SuperheroFullInfoType} from "../shared/types/superhero-full-info.type.ts";
-import type {SuperheroSummaryType} from "../shared/types/superhero-summary.type.ts";
-import {superheroesApi} from "../shared/api/superheroes.api.ts";
-import type {HeroFormValues} from "../helpers/validators/superhero.validation.ts";
+import {createSlice} from "@reduxjs/toolkit";
+import type {SuperheroFullInfoType} from "./types/superhero-full-info.type.ts";
+import type {SuperheroSummaryType} from "./types/superhero-summary.type.ts";
+
+import {addHeroImage, createNewHero, deleteHeroImage, getHeroById, getHeroes} from "./thunks.ts";
 
 
 type HeroesState = {
@@ -33,7 +33,7 @@ const heroesSlice = createSlice({
                 })
                 .addCase(getHeroes.fulfilled, (state, action) => {
                     state.isLoading = false;
-                    state.items = action.payload;
+                    state.items = action.payload.items;
                 })
                 .addCase(getHeroes.rejected, (state) => {
                     state.isLoading = false;
@@ -63,6 +63,17 @@ const heroesSlice = createSlice({
                     state.isLoading = false;
                     state.error = "500";
                 })
+                .addCase(addHeroImage.fulfilled, (state, action) => {
+                    state.isLoading = false;
+                    if (!state.selected) return;
+                    state.selected.imagesSet.push(action.payload);
+                })
+                .addCase(deleteHeroImage.fulfilled, (state, action) => {
+                    state.isLoading = false;
+                    if (!state.selected) return;
+                    state.selected.imagesSet = state.selected.imagesSet.filter(image => image.id !== action.payload);
+                })
+
 
         }
     }
@@ -71,28 +82,7 @@ const heroesSlice = createSlice({
 
 export const heroesReducer = heroesSlice.reducer;
 
-export const getHeroes = createAsyncThunk<SuperheroSummaryType[]>(
-    "heroes/getAll",
-    async () => await superheroesApi.getAll());
 
-export const getHeroById = createAsyncThunk<SuperheroFullInfoType | null, number>(
-    "heroes/getById",
-    async (id: number) => await superheroesApi.getById(id))
-
-export const createNewHero = createAsyncThunk<SuperheroFullInfoType, HeroFormValues>(
-    "heroes/createNewHero",
-    async (dto: HeroFormValues) => {
-        return await superheroesApi.createHero(dto)
-
-    })
-
-export const updateHero = createAsyncThunk<void, {id: number, dto: HeroFormValues}>(
-    "heroes/updateHero",
-    async ({id , dto}:{id: number, dto: HeroFormValues}) => await superheroesApi.updateHero(id,dto))
-
-export const deleteHero = createAsyncThunk<void, number>(
-    "heroes/deleteById",
-    async (id: number) => await superheroesApi.deleteHero(id))
 
 
 

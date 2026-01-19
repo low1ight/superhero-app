@@ -10,15 +10,15 @@ type ConfirmDialogProps = {
 };
 
 export function ConfirmModal({
-                                  open,
-                                  title = "Confirmation",
-                                  description = "Are you sure?",
-                                  confirmText = "Delete",
-                                  cancelText = "Cancel",
-                                  loading = false,
-                                  onConfirm,
-                                  onClose,
-                              }: ConfirmDialogProps) {
+                                 open,
+                                 title = "Confirmation",
+                                 description = "Are you sure?",
+                                 confirmText = "Delete",
+                                 cancelText = "Cancel",
+                                 loading = false,
+                                 onConfirm,
+                                 onClose,
+                             }: ConfirmDialogProps) {
     if (!open) return null;
 
     return (
@@ -26,7 +26,7 @@ export function ConfirmModal({
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
             onClick={onClose}>
 
-            <div className="absolute inset-0 bg-black/50" />
+            <div className="absolute inset-0 bg-black/50"/>
 
 
             <div

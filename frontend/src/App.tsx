@@ -1,10 +1,10 @@
 import './App.css'
-import Header from "./components/Header.tsx";
+import Header from "./shared/Header.tsx";
 import {Navigate, Route, Routes} from "react-router-dom";
-import HeroesListPage from "./pages/HeroesListPage.tsx";
-import HeroesInfoPage from "./pages/HeroInfoPage.tsx";
-import HeroCreatePage from "./pages/HeroCreatePage.tsx";
-import HeroEditPage from "./pages/HeroEditPage.tsx";
+import HeroesListPage from "./features/superheroes/ui/pages/HeroesListPage.tsx";
+import HeroesInfoPage from "./features/superheroes/ui/pages/HeroInfoPage.tsx";
+import HeroCreatePage from "./features/superheroes/ui/pages/HeroCreatePage.tsx";
+import HeroEditPage from "./features/superheroes/ui/pages/HeroEditPage.tsx";
 
 function App() {
 

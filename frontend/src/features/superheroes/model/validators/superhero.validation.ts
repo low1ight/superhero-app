@@ -1,5 +1,8 @@
 import {z} from "zod";
 
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
+
 export const heroSchema = z.object({
     nickname: z
         .string()
@@ -21,14 +24,25 @@ export const heroSchema = z.object({
         .string()
         .min(2, "Catch phrase must be at least 2 characters")
         .max(100, "Catch phrase must be max 100 characters"),
+    image: z
+        .instanceof(File)
+        .nullable()
+        .optional()
+        .refine((file) => !file || file.size <= MAX_FILE_SIZE, {
+            message: "Max img size is 5MB",
+        })
+        .refine((file) => !file || ACCEPTED_IMAGE_TYPES.includes(file.type), {
+            message: "Supported formats: .jpg, .png, .webp",
+        }),
 });
 
-export const defaultValues = {
-    nickname: "",
-    realName: "",
-    originDescription:"",
-    superPower: "",
-    catchPhrase: "",
+export const defaultValues:Partial<HeroFormValues> = {
+    nickname: "qwerty",
+    realName: "real nametemp",
+    originDescription:"qweqwewqewqeqweqwedesc",
+    superPower: "pooowerrr",
+    catchPhrase: "all might",
+    image: null,
 }
 
 export type HeroFormValues = z.infer<typeof heroSchema>;

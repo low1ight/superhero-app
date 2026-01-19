@@ -1,12 +1,16 @@
-import type {SuperheroFullInfoType} from "../../shared/types/superhero-full-info.type.ts";
+import type {SuperheroFullInfoType} from "../../model/types/superhero-full-info.type.ts";
+import {HeroPhotoGallery} from "./HeroPhotoGallery.tsx";
+import heroPlaceholder from '../../../../assets/hero-placeholder.png'
 
+function HeroInfo({id,imageUrl,imagesSet,nickname,originDescription,superPower,catchPhrase,realName}:SuperheroFullInfoType) {
 
-function HeroInfo({imageUrl,nickname,originDescription,superPower,catchPhrase,realName}:SuperheroFullInfoType) {
+    const img = imageUrl || heroPlaceholder
+
     return (
         <div className="grid gap-8 md:grid-cols-[320px_1fr] overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-lg p-6 md:p-8">
             <div className="self-start  h-[320px] overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br from-gray-50 to-gray-100 shadow-inner">
                 <img
-                    src={imageUrl}
+                    src={img}
                     alt={nickname}
                     className="w-full h-full object-cover block"
                 />
@@ -63,6 +67,9 @@ function HeroInfo({imageUrl,nickname,originDescription,superPower,catchPhrase,re
                         </span>
                     </div>
                 </div>
+            </div>
+            <div className="md:col-span-2 w-full pt-6 border-t border-gray-100">
+                <HeroPhotoGallery images={imagesSet} heroId={id} />
             </div>
         </div>
     )

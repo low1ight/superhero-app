@@ -30,9 +30,9 @@ function HeroInfoSkeleton() {
                         <span className="w-1 h-6 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full"></span>
                         Description
                     </h2>
-                    <p className="h-30 skeleton-wrapper">
+                    <div className="h-30 skeleton-wrapper">
                         <div className="skeleton-shimmer"></div>
-                    </p>
+                    </div>
                 </div>
 
 

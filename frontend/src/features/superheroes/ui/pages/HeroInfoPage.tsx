@@ -1,12 +1,12 @@
 import {Link, useNavigate, useParams} from "react-router-dom";
-import Button from "../components/ui/Button.tsx";
-import {useAppDispatch, useAppSelector} from "../store/hooks.ts";
-import {deleteHero, getHeroById} from "../store/heroesSlice.ts";
+import Button from "../../../../shared/ui/Button.tsx";
+import {useAppDispatch, useAppSelector} from "../../../../app/hooks.ts";
 import {useEffect, useState} from "react";
-import {ConfirmModal} from "../components/ui/ConfirmModal.tsx";
-import HeroInfo from "../components/heroes/HeroInfo.tsx";
-import HeroInfoSkeleton from "../components/heroes/HeroInfoSekeleton.tsx";
-import BackToList from "../components/ui/BackToList.tsx";
+import {ConfirmModal} from "../../../../shared/ui/ConfirmModal.tsx";
+import HeroInfo from "../components/HeroInfo.tsx";
+import HeroInfoSkeleton from "../skeletons/HeroInfoSekeleton.tsx";
+import BackToList from "../components/BackToList.tsx";
+import {deleteHero, getHeroById} from "../../model/thunks.ts";
 
 function HeroesInfoPage() {
 

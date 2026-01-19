@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import {heroesReducer} from "./heroesSlice.ts";
+import {heroesReducer} from "../features/superheroes/model/heroesSlice.ts";
 
 export const store = configureStore({
     reducer: {
